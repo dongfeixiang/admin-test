@@ -1,0 +1,7 @@
+// jsconfig.json
+{
+    "compilerOptions": {
+      // ...
+      "types": ["element-plus/global"]
+    }
+  }
