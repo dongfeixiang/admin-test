@@ -1,18 +1,28 @@
 <script setup>
-import { useCollapseStore, useAuthStore } from "@/store";
-import router from "../router";
+import { ref } from "vue";
+import { useCollapseStore, useTokenStore } from "@/store";
+import router from "@/router";
+import { getUserInfo } from "@/api/user";
 
 const collapseStore = useCollapseStore();
+const userInfo = ref({
+  username: "用户",
+});
+getUserInfo().then((res) => {
+  userInfo.value = res.data;
+});
+
 const handleCommand = (command) => {
   if (command === "personalInfo") {
     // 个人信息
+    console.log(userInfo.value);
   } else if (command === "changePassword") {
     // 修改密码
   } else {
     // 退出
+    const tokenStore = useTokenStore();
+    tokenStore.clearToken();
     localStorage.removeItem("token");
-    const authStore = useAuthStore();
-    authStore.logout();
     router.push({ name: "login" });
   }
 };
@@ -30,11 +40,15 @@ const handleCommand = (command) => {
     </el-col>
     <el-col :span="20">
       <!-- 面包屑 -->
-      <span>导航</span>
+      <el-breadcrumb separator-icon="ArrowRight" class="breadcrumb">
+        <el-breadcrumb-item :to="{ name: 'home' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>用户权限</el-breadcrumb-item>
+        <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+      </el-breadcrumb>
     </el-col>
     <el-col :span="2">
       <el-dropdown trigger="click" @command="handleCommand">
-        <el-avatar icon="UserFilled" />
+        <el-avatar>{{ userInfo.username }}</el-avatar>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item command="personalInfo">个人信息</el-dropdown-item>

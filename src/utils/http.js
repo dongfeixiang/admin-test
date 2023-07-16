@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useTokenStore } from "@/store";
 
 const http = axios.create({
   // baseURL: "http://127.0.0.1:8000/",
@@ -13,7 +14,8 @@ const freeUrl = ["/api/login/"];
 http.interceptors.request.use(
   (request) => {
     if (freeUrl.indexOf(request.url) === -1) {
-      request.headers.Authorization = localStorage.getItem("token");
+      const tokenStore = useTokenStore()
+      request.headers.Authorization = `Token ${tokenStore.token}`;
     }
     return request;
   },

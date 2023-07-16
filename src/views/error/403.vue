@@ -1,3 +1,3 @@
 <template>
-    403
+    无权限
 </template>

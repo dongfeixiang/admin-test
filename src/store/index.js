@@ -10,19 +10,19 @@ const useCollapseStore = defineStore("collapse", () => {
   return { isCollapse, changeCollapse };
 });
 
-const useAuthStore = defineStore("authenticate", () => {
-  const isAuthenticated = ref(false);
-  if (localStorage.getItem('token')){
-    isAuthenticated.value = true
+const useTokenStore = defineStore("token", () => {
+  const token = ref(localStorage.getItem("token"));
+  function setToken(value) {
+    token.value = value;
   }
-  function login() {
-    isAuthenticated.value = true;
+  function clearToken() {
+    token.value = "";
   }
-  function logout() {
-    isAuthenticated.value = false;
+  function saveToken() {
+    localStorage.setItem("token", token.value);
   }
 
-  return { isAuthenticated, login, logout };
+  return { token, setToken, clearToken, saveToken };
 });
 
-export { useCollapseStore, useAuthStore };
+export { useCollapseStore, useTokenStore };

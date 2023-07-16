@@ -11,7 +11,7 @@ const getRoles = async () => {
 
 const addRole = async (role) => {
   try {
-    const response = await http.post("/api/group/", { ...role });
+    const response = await http.post("/api/group/", role);
     return response;
   } catch (error) {
     console.log(error);
@@ -20,7 +20,7 @@ const addRole = async (role) => {
 
 const updateRole = async (id, role) => {
   try {
-    const response = await http.put(`/api/group/${id}/`, { ...role });
+    const response = await http.put(`/api/group/${id}/`, role);
     return response;
   } catch (error) {
     console.log(error);

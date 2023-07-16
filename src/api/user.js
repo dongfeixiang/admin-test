@@ -9,10 +9,10 @@ const getUsers = async () => {
   }
 };
 
-const getUserDetail = async (id) => {
+const getUserInfo = async () => {
   try {
-    const response = await http.get(`/api/user/${id}/`);
-    return response;
+    const response = await http.get('/api/user/self');
+    return response
   } catch (error) {
     console.log(error);
   }
@@ -45,4 +45,4 @@ const deleteUser = async (id) => {
   }
 };
 
-export { getUsers, getUserDetail, addUser, updateUser, deleteUser };
+export { getUsers, getUserInfo, addUser, updateUser, deleteUser };

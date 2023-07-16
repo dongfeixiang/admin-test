@@ -1,3 +1,3 @@
 <template>
-    404
+    未找到
 </template>

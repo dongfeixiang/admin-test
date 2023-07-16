@@ -1,7 +1,6 @@
 <script setup>
 import {
   getUsers,
-  getUserDetail,
   addUser,
   updateUser,
   deleteUser,
@@ -170,7 +169,7 @@ const close = (formRef) => {
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input
-          :show-password="type === 'Add' ? true : false"
+          show-password
           v-model="user.password"
           :disabled="type === 'Add' ? false : true"
         >

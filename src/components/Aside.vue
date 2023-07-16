@@ -1,6 +1,9 @@
 <script setup>
-import menus from "@/router/menu";
 import { useCollapseStore } from "@/store";
+import useRoutesStore from "@/store/routes";
+
+const routesStore = useRoutesStore();
+const menus = routesStore.routes;
 
 const collapseStore = useCollapseStore();
 </script>
@@ -16,21 +19,25 @@ const collapseStore = useCollapseStore();
     :unique-opened="true"
   >
     <h3>Logo</h3>
-    <template v-for="menu in menus" :key="menu.label">
+    <template v-for="menu in menus" :key="menu.path">
       <!-- 没有子菜单 -->
-      <el-menu-item v-if="!menu.children" :index="menu.path">
-        <el-icon><component :is="menu.icon"></component></el-icon>
-        <span>{{ menu.label }}</span>
+      <el-menu-item v-if="!menu.children" :index="menu.path" :route="menu">
+        <el-icon><component :is="menu.meta.icon"></component></el-icon>
+        <span>{{ menu.meta.label }}</span>
       </el-menu-item>
       <!-- 有子菜单 -->
       <el-sub-menu v-else :index="menu.path">
         <template #title>
-          <el-icon><component :is="menu.icon"></component></el-icon>
-          <span>{{ menu.label }}</span>
+          <el-icon><component :is="menu.meta.icon"></component></el-icon>
+          <span>{{ menu.meta.label }}</span>
         </template>
-        <el-menu-item v-for="submenu in menu.children" :index="submenu.path">
-          <el-icon><component :is="submenu.icon"></component></el-icon>
-          <span> {{ submenu.label }}</span>
+        <el-menu-item
+          v-for="submenu in menu.children"
+          :index="submenu.path"
+          :route="submenu"
+        >
+          <el-icon><component :is="submenu.meta.icon"></component></el-icon>
+          <span> {{ submenu.meta.label }}</span>
         </el-menu-item>
       </el-sub-menu>
     </template>
